@@ -36,7 +36,6 @@ enum TransactionCategory {
   FOOD
   TRANSPORT
   HOUSE
-  UTILITY
   SALARY
   SHOPPING
   ENTERTAINMENT
@@ -52,7 +51,7 @@ enum TransactionCategory {
   HEALTH
   TRAVEL
   EDUCATION
-  ESPIRITUALITY
+  SPIRITUALITY
   OTHER
 }
 
