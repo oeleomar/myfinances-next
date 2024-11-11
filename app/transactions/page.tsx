@@ -2,11 +2,14 @@ import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { TransactionColumns } from "./_columns";
 import AddTransactionButton from "../_components/add-transaction-button";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 
 const TransactionsPage = async () => {
-  const transactions = await db.transaction.findMany();
+  const { userId } = await auth();
+  if (!userId) redirect("/login");
 
-  console.log(transactions);
+  const transactions = await db.transaction.findMany({ where: { userId } });
 
   return (
     <div className="space-y-6 p-6">
