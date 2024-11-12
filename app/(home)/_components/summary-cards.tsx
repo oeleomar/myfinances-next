@@ -5,68 +5,20 @@ import {
   WalletIcon,
 } from "lucide-react";
 import SummaryCard from "./summary-card";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { db } from "@/app/_lib/prisma";
 
 interface SummaryCardsProps {
-  month?: string;
+  balance: number;
+  investmentsTotal: number;
+  incomesTotal: number;
+  expensesTotal: number;
 }
 
-const SummaryCards = async ({ month }: SummaryCardsProps) => {
-  const { userId } = await auth();
-  if (!userId) redirect("/login");
-  const where = {
-    date: {
-      gte: new Date(`2024-${month}-01`),
-      lt: new Date(`2024-${month}-31`),
-    },
-  };
-
-  const invetsmentsTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: {
-          type: "INVESTMENT",
-          userId,
-          ...where,
-        },
-        _sum: {
-          amount: true,
-        },
-      })
-    )?._sum?.amount,
-  );
-  const incomesTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: {
-          type: "INCOME",
-          userId,
-          ...where,
-        },
-        _sum: {
-          amount: true,
-        },
-      })
-    )?._sum?.amount,
-  );
-  const expensesTotal = Number(
-    (
-      await db.transaction.aggregate({
-        where: {
-          type: "EXPENSE",
-          userId,
-          ...where,
-        },
-        _sum: {
-          amount: true,
-        },
-      })
-    )?._sum?.amount,
-  );
-  const balance = incomesTotal - invetsmentsTotal - expensesTotal;
-
+const SummaryCards = async ({
+  balance,
+  incomesTotal,
+  investmentsTotal,
+  expensesTotal,
+}: SummaryCardsProps) => {
   return (
     <div className="space-y-6">
       <SummaryCard
@@ -80,7 +32,7 @@ const SummaryCards = async ({ month }: SummaryCardsProps) => {
         <SummaryCard
           icon={<PiggyBankIcon size={16} />}
           title="Investido"
-          amount={invetsmentsTotal}
+          amount={investmentsTotal}
         />
         <SummaryCard
           icon={<TrendingUpIcon size={16} className="text-income" />}
