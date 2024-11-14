@@ -34,7 +34,7 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
               year: "numeric",
             })
           ) : (
-            <span>Selecione uma data</span>
+            <span>Selecione uma data...</span>
           )}
         </Button>
       </PopoverTrigger>
@@ -43,8 +43,10 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           mode="single"
           selected={value}
           onSelect={onChange}
-          initialFocus
           locale={ptBR}
+          disabled={(date) =>
+            date > new Date() || date < new Date("1900-01-01")
+          }
         />
       </PopoverContent>
     </Popover>

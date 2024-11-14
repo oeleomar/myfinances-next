@@ -20,6 +20,7 @@ const Navbar = () => {
               : "text-primary-foreground"
           }
         />
+        <p>cash-control.ai</p>
         <Link
           href="/"
           className={
