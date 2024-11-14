@@ -61,7 +61,7 @@ export const TransactionsPieChart = ({
   ];
 
   return (
-    <Card className="flex flex-col p-12">
+    <Card className="flex flex-col p-6">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -82,17 +82,17 @@ export const TransactionsPieChart = ({
         </ChartContainer>
         <div className="space-y-2">
           <PercentageItem
-            icon={<TrendingUpIcon size={16} className="text-income" />}
+            icon={<TrendingUpIcon size={20} className="text-income" />}
             title="Receita"
             value={typesPercentages[TransactionType.INCOME]}
           />
           <PercentageItem
-            icon={<TrendingDownIcon size={16} className="text-danger" />}
+            icon={<TrendingDownIcon size={20} className="text-danger" />}
             title="Despesa"
             value={typesPercentages[TransactionType.EXPENSE]}
           />
           <PercentageItem
-            icon={<PiggyBankIcon size={16} />}
+            icon={<PiggyBankIcon size={20} />}
             title="Investido"
             value={typesPercentages[TransactionType.INVESTMENT]}
           />
