@@ -38,6 +38,17 @@ export const TRANSACTION_PAYMENT_METHOD_LABEL = {
   OTHER: "Outro",
 };
 
+export const TRANSACTION_PAYMENT_METHOD_ICONS = {
+  CASH: "money.svg",
+  DEBIT: "debit-card.svg",
+  CREDIT: "credit-card.svg",
+  CHECK: "other.svg",
+  TRANSFER: "bank-transfer.svg",
+  CRYPTO: "bitcoin.svg",
+  PIX: "pix.svg",
+  OTHER: "other.svg",
+};
+
 export const TRANSACTION_TYPE_OPTIONS = [
   {
     value: TransactionType.EXPENSE,
