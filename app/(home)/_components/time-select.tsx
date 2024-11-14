@@ -43,7 +43,11 @@ const TimeSelect = () => {
       <SelectContent>
         {MONTH_OPTIONS.map((option) => (
           <SelectItem key={option.value} value={option.value}>
-            {option.label}
+            {new Date(`2024-${option.value}-10`)
+              .toLocaleString("pt-BR", {
+                month: "long",
+              })
+              .replace(/^\w/, (c) => c.toUpperCase())}
           </SelectItem>
         ))}
       </SelectContent>

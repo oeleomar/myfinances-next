@@ -1,12 +1,11 @@
 import { db } from "@/app/_lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { TransactionType } from "@prisma/client";
-import { redirect } from "next/navigation";
 import { TotalExpensePerCategory, TransactionPercentagePerType } from "./types";
 
 export const getDashboard = async (month: string) => {
   const { userId } = await auth();
-  if (!userId) redirect("/login");
+  if (!userId) throw new Error("User not found");
 
   const where = {
     userId,
