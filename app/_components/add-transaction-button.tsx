@@ -28,7 +28,7 @@ const AddTransactionButton = ({
             <Button
               className="rounded-full font-bold"
               onClick={() => setDialogIsOpen(true)}
-              disabled={userCanAddTransaction}
+              disabled={!userCanAddTransaction}
             >
               Adicionar Transação <ArrowDownUpIcon />
             </Button>
