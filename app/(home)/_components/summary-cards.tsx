@@ -11,6 +11,7 @@ interface SummaryCardsProps {
   investmentsTotal: number;
   incomesTotal: number;
   expensesTotal: number;
+  userCanAddTransaction: boolean;
 }
 
 const SummaryCards = async ({
@@ -18,6 +19,7 @@ const SummaryCards = async ({
   incomesTotal,
   investmentsTotal,
   expensesTotal,
+  userCanAddTransaction,
 }: SummaryCardsProps) => {
   return (
     <div className="space-y-6">
@@ -26,6 +28,7 @@ const SummaryCards = async ({
         icon={<WalletIcon size={16} />}
         amount={balance}
         title="Saldo"
+        userCanAddTransaction={userCanAddTransaction}
       />
 
       <div className="grid grid-cols-3 gap-6">
