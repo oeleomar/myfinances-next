@@ -30,7 +30,7 @@ export const generateAiReport = async ({ month }: GenerateAiReportSchema) => {
     },
   });
 
-  const content = `Gere um relatório com insights sobre minhas finanças, com dicas e orientações de como melhorar
+  const content = `Gere um relatório com insights sobre minhas finanças em português, com dicas e orientações de como melhorar
   minha vida financeira. As transações estão divididas por ponto e vírgula. A estrutura de cada uma é {DATA}-{TIPO}-
   {VALOR}-{CATEGORIA}. São elas: 
   ${transactions

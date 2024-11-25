@@ -79,4 +79,7 @@ body {
   body {
     @apply h-full bg-background text-foreground;
   }
+  strong {
+    @apply text-primary !important;
+  }
 }
