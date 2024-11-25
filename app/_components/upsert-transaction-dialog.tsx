@@ -43,6 +43,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { upsertTransaction } from "../_actions/upsert-transaction";
+import { Checkbox } from "./ui/checkbox";
 
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
@@ -64,6 +65,7 @@ const formSchema = z.object({
     required_error: "Método de pagamento é obrigatório",
   }),
   date: z.date({ required_error: "Data é obrigatória" }),
+  paid: z.boolean(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -85,6 +87,7 @@ const UpsertTransactionDialog = ({
       category: TransactionCategory.OTHER,
       paymentMethod: PaymentMethod.PIX,
       date: new Date(),
+      paid: false,
     },
   });
 
@@ -243,6 +246,23 @@ const UpsertTransactionDialog = ({
                 <FormItem>
                   <FormLabel>Data</FormLabel>
                   <DatePicker value={field.value} onChange={field.onChange} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="paid"
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <Checkbox
+                    id="paid"
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
+                  />
+                  <FormLabel className="m-0" htmlFor="paid">
+                    Já efetuei/recebi essa transação
+                  </FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
