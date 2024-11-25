@@ -12,7 +12,10 @@ const TransactionsPage = async () => {
   const { userId } = await auth();
   if (!userId) redirect("/login");
 
-  const transactions = await db.transaction.findMany({ where: { userId } });
+  const transactions = await db.transaction.findMany({
+    where: { userId },
+    orderBy: { date: "desc" },
+  });
   const userCanAddTransaction = await canUserAddTransaction();
   return (
     <>
