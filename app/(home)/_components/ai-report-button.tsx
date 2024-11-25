@@ -15,12 +15,14 @@ import { generateAiReport } from "../_actions/generate-ai-report";
 import { useState } from "react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import Markdown from "react-markdown";
+import Link from "next/link";
 
 interface AiReportButtonProps {
+  hasProPlan: boolean;
   month: string;
 }
 
-const AiReportButton = ({ month }: AiReportButtonProps) => {
+const AiReportButton = ({ month, hasProPlan }: AiReportButtonProps) => {
   const [report, setReport] = useState<string | null>();
   const [reportIsLoading, setReportIsLoading] = useState(false);
 
@@ -35,6 +37,7 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
       setReportIsLoading(false);
     }
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -46,9 +49,10 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Relatório de IA</DialogTitle>
-          <DialogDescription>
-            Use uma inteligência artificial para gerar um relatório com insights
-            sobre suas finanças.
+          <DialogDescription className="pt-4">
+            {!hasProPlan
+              ? "Apenas usuários PRO podem gerar relatórios"
+              : "Use uma inteligência artificial para gerar um relatório com insights sobre suas finanças."}
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="prose-string:text-white prose max-h-[600px] text-white prose-h3:text-white prose-h4:text-white">
@@ -58,10 +62,16 @@ const AiReportButton = ({ month }: AiReportButtonProps) => {
           <DialogClose asChild>
             <Button variant="ghost">Cancelar</Button>
           </DialogClose>
-          <Button onClick={handleGenerateReport} disabled={reportIsLoading}>
-            {reportIsLoading && <Loader2Icon className="animate-spin" />}
-            Gerar Relatório
-          </Button>
+          {!hasProPlan ? (
+            <Button asChild>
+              <Link href="/subscription">Adquirir Plano</Link>
+            </Button>
+          ) : (
+            <Button onClick={handleGenerateReport} disabled={reportIsLoading}>
+              {reportIsLoading && <Loader2Icon className="animate-spin" />}
+              Gerar Relatório
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
