@@ -11,7 +11,7 @@ import {
 } from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
 import { TrashIcon } from "lucide-react";
-import { deleteTransaction } from "../_actions/delete-transaction";
+import { deleteTransaction } from "../../transactions/_actions/delete-transaction";
 import { useState } from "react";
 import { toast } from "sonner";
 

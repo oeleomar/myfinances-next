@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
       data: {
         ...transaction,
         isRecurring: false,
+        paid: false,
         date: new Date(`${year}-${new Date().getMonth() + 1}-${day}`),
       },
     });

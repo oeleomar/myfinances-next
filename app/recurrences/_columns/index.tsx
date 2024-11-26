@@ -2,15 +2,15 @@
 
 import { Transaction } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { TransactionTypeBadge } from "../../_components/transactions/type-badge";
 import {
   TRANSACTION_CATEGORY_LABEL,
   TRANSACTION_PAYMENT_METHOD_LABEL,
 } from "@/app/_constants/transaction";
-import EditTransactionButton from "../../_components/transactions/edit-transactionbutton";
-import DeleteTransactioButton from "../../_components/transactions/delete-transactionbutton";
+import { TransactionTypeBadge } from "@/app/_components/transactions/type-badge";
+import EditTransactionButton from "@/app/_components/transactions/edit-transactionbutton";
+import DeleteTransactioButton from "@/app/_components/transactions/delete-transactionbutton";
 
-export const TransactionColumns: ColumnDef<Transaction>[] = [
+export const RecurrenceColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "name",
     header: "Nome",
@@ -52,6 +52,12 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
         style: "currency",
         currency: "BRL",
       }).format(Number(transaction.amount)),
+  },
+  {
+    accessorKey: "recurrence",
+    header: "Recorrência Restante",
+    cell: ({ row: { original: transaction } }) =>
+      transaction.recurrence ? `${transaction.recurrence}x` : "Nenhuma",
   },
   {
     accessorKey: "actions",

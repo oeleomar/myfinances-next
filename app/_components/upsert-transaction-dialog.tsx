@@ -66,6 +66,8 @@ const formSchema = z.object({
   }),
   date: z.date({ required_error: "Data é obrigatória" }),
   paid: z.boolean(),
+  isRecurring: z.boolean().optional(),
+  recurrence: z.number().optional(),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
@@ -77,6 +79,7 @@ const UpsertTransactionDialog = ({
   transactionId,
 }: UpsertTransactionDialogProps) => {
   const [submitState, setOnSubmitState] = useState(false);
+  const [isRecurring, setIsRecurring] = useState(false);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -88,6 +91,8 @@ const UpsertTransactionDialog = ({
       paymentMethod: PaymentMethod.PIX,
       date: new Date(),
       paid: false,
+      isRecurring: false,
+      recurrence: 0,
     },
   });
 
@@ -141,7 +146,7 @@ const UpsertTransactionDialog = ({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel>Valor</FormLabel>
                   <FormControl>
                     <MoneyInput
                       placeholder="Digite o valor..."
@@ -267,6 +272,47 @@ const UpsertTransactionDialog = ({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="isRecurring"
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <Checkbox
+                    id="isRecurring"
+                    onCheckedChange={() => {
+                      field.onChange(!field.value);
+                      setIsRecurring(!isRecurring);
+                    }}
+                    checked={field.value}
+                  />
+                  <FormLabel className="m-0" htmlFor="isRecurring">
+                    Essa transação é recorrente
+                  </FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {isRecurring && (
+              <FormField
+                control={form.control}
+                name="recurrence"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Quantas vezes ela se repete?</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="2x"
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <DialogFooter>
               <DialogClose asChild>
