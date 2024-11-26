@@ -44,9 +44,6 @@ export const DatePicker = ({ value, onChange }: DatePickerProps) => {
           selected={value}
           onSelect={onChange}
           locale={ptBR}
-          disabled={(date) =>
-            date > new Date() || date < new Date("1900-01-01")
-          }
         />
       </PopoverContent>
     </Popover>

@@ -15,7 +15,7 @@ const Navbar = () => {
           width={173}
           height={39}
           className={
-            pathname === "/transactions"
+            pathname === "/"
               ? "font-bold text-primary"
               : "text-primary-foreground"
           }

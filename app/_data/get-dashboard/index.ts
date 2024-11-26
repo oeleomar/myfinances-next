@@ -99,6 +99,54 @@ export const getDashboard = async (month: string) => {
     orderBy: { date: "desc" },
     take: 15,
   });
+
+  const incomesPaid = Number(
+    (
+      await db.transaction.aggregate({
+        where: {
+          type: "INCOME",
+          ...where,
+          paid: true,
+        },
+        _sum: {
+          amount: true,
+        },
+      })
+    )?._sum?.amount,
+  );
+
+  const expensesPaid = Number(
+    (
+      await db.transaction.aggregate({
+        where: {
+          type: "EXPENSE",
+          ...where,
+          paid: true,
+        },
+        _sum: {
+          amount: true,
+        },
+      })
+    )?._sum?.amount,
+  );
+
+  const investimentsPaid = Number(
+    (
+      await db.transaction.aggregate({
+        where: {
+          type: "INVESTMENT",
+          ...where,
+          paid: true,
+        },
+        _sum: {
+          amount: true,
+        },
+      })
+    )?._sum?.amount,
+  );
+
+  const totalPaid = incomesPaid + expensesPaid + investimentsPaid;
+
   return {
     balance,
     investmentsTotal,
@@ -107,5 +155,6 @@ export const getDashboard = async (month: string) => {
     typesPercentages,
     totalExpensePerCategory,
     lastTransactions: JSON.parse(JSON.stringify(lastTransactions)),
+    totalPaid,
   };
 };
