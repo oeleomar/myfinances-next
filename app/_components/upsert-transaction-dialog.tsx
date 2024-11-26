@@ -254,13 +254,13 @@ const UpsertTransactionDialog = ({
               control={form.control}
               name="paid"
               render={({ field }) => (
-                <FormItem className="flex items-center">
+                <FormItem className="m-0 flex items-center space-y-0">
                   <Checkbox
                     id="paid"
                     onCheckedChange={field.onChange}
                     checked={field.value}
                   />
-                  <FormLabel className="m-0" htmlFor="paid">
+                  <FormLabel className="ml-2" htmlFor="paid">
                     Já efetuei/recebi essa transação
                   </FormLabel>
                   <FormMessage />

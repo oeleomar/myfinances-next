@@ -15,17 +15,19 @@ const Navbar = () => {
           width={173}
           height={39}
           className={
-            pathname === "/transactions"
-              ? "font-bold text-primary underline"
+            pathname === "/"
+              ? "font-bold text-primary"
               : "text-primary-foreground"
           }
         />
-        <p>cash-control.ai</p>
+        {
+          //<p>cash-control.ai</p>}
+        }
         <Link
           href="/"
           className={
             pathname === "/"
-              ? "font-bold text-primary underline"
+              ? "font-bold text-primary"
               : "text-primary-foreground"
           }
         >
@@ -35,13 +37,22 @@ const Navbar = () => {
           href="/transactions"
           className={
             pathname === "/transactions"
-              ? "font-bold text-primary underline"
+              ? "font-bold text-primary"
               : "text-primary-foreground"
           }
         >
           Transactions
         </Link>
-        <Link href="/subscription">Assinatura</Link>
+        <Link
+          href="/subscription"
+          className={
+            pathname === "/subscription"
+              ? "font-bold text-primary"
+              : "text-primary-foreground"
+          }
+        >
+          Assinatura
+        </Link>
       </div>
       <UserButton showName />
     </nav>

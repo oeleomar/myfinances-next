@@ -54,10 +54,16 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
       }).format(Number(transaction.amount)),
   },
   {
+    accessorKey: "paid",
+    header: "Pago",
+    cell: ({ row: { original: transaction } }) =>
+      transaction.paid ? <p>Sim</p> : <p>Não</p>,
+  },
+  {
     accessorKey: "actions",
     header: "",
     cell: ({ row: { original: transaction } }) => (
-      <div className="space-x-1">
+      <div className="flex justify-end space-x-1">
         <EditTransactionButton transaction={transaction} />
         <DeleteTransactioButton transactionId={transaction.id} />
       </div>
