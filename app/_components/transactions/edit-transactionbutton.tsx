@@ -29,6 +29,7 @@ const EditTransactionButton = ({ transaction }: EditTransactionButtonProps) => {
         defaultValues={{
           ...transaction,
           amount: Number(transaction.amount),
+          recurrence: Number(transaction.recurrence),
         }}
         transactionId={transaction.id}
       />
