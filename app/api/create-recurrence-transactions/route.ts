@@ -9,23 +9,38 @@ export const GET = async (request: Request) => {
     });
   }
 
-  const transactions = await db.transaction.findMany({
-    where: { isRecurring: true, recurrence: { gt: 0 } },
-  });
+  // Efficient transaction retrieval with error handling
+  const transactions = await db.transaction
+    .findMany({
+      where: { isRecurring: true, recurrence: { gt: 0 } },
+    })
+    .catch((err) => {
+      console.error("Error fetching transactions:", err);
+      return NextResponse.error();
+    });
+
+  if (!Array.isArray(transactions) || !transactions.length) {
+    return NextResponse.json({
+      success: true,
+      message: "No recurring transactions found",
+    });
+  }
 
   try {
-    transactions.forEach(async (transaction) => {
-      if (!transaction.recurrence || transaction.recurrence < 1) return;
+    for (const transaction of transactions) {
+      if (!transaction.recurrence || transaction.recurrence < 1) continue; // Skip non-recurring transactions
 
-      const day = transaction.date.getDate();
-      const year = transaction.date.getFullYear();
+      const { date, ...transactionData } = transaction;
+      const day = date.getDate();
+      const year = date.getFullYear();
+      const month = new Date().getMonth() + 1; // Use current month to ensure correct scheduling
 
       await db.transaction.create({
         data: {
-          ...transaction,
+          ...transactionData,
           isRecurring: false,
           paid: false,
-          date: new Date(`${year}-${new Date().getMonth() + 1}-${day}`),
+          date: new Date(`${year}-${month}-${day}`), // Updated date with current month
         },
       });
 
@@ -35,9 +50,11 @@ export const GET = async (request: Request) => {
           recurrence: transaction.recurrence - 1,
         },
       });
-    });
+    }
+
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error("Error creating or updating transactions:", err);
     return NextResponse.error();
   }
 };
