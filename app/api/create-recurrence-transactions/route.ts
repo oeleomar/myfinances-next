@@ -36,9 +36,8 @@ export const GET = async (request: Request) => {
         },
       });
     });
+    return NextResponse.json({ success: true });
   } catch (err) {
     return NextResponse.error();
   }
-
-  return NextResponse.json({ success: true });
 };
