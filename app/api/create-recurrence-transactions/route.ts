@@ -2,7 +2,7 @@ import { db } from "@/app/_lib/prisma";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
-  const authHeader = request.headers.get("authorization");
+  const authHeader = request.headers.get("Authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", {
       status: 401,
@@ -38,8 +38,10 @@ export const GET = async (request: Request) => {
       await db.transaction.create({
         data: {
           ...transactionData,
+          id: undefined,
           isRecurring: false,
           paid: false,
+          name: `${transaction.name} - ${month}/${year}`,
           date: new Date(`${year}-${month}-${day}`), // Updated date with current month
         },
       });
