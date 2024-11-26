@@ -1,7 +1,7 @@
 import { db } from "@/app/_lib/prisma";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export default async function handler(request: NextRequest) {
+export const GET = async (request: Request) => {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response("Unauthorized", {
@@ -41,4 +41,4 @@ export default async function handler(request: NextRequest) {
   }
 
   return NextResponse.json({ success: true });
-}
+};
