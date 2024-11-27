@@ -12,14 +12,19 @@ const YEAR_OPTIONS = [
   { value: "2024", label: "2024" },
   { value: "2025", label: "2025" },
 ];
-const YearSelect = () => {
+
+interface YearSelectProps {
+  slug?: string;
+}
+
+const YearSelect = ({ slug }: YearSelectProps) => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const year = searchParams.get("year");
   const month = searchParams.get("month");
 
   const handleYearChange = (value: string) => {
-    push(`/?month=${month}&year=${value}`);
+    push(`/${slug}?month=${month}&year=${value}`);
   };
 
   return (

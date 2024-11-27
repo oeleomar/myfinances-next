@@ -23,14 +23,18 @@ const MONTH_OPTIONS = [
   { value: "12", label: "December" },
 ];
 
-const TimeSelect = () => {
+interface TimeSelectProps {
+  slug?: string;
+}
+
+const TimeSelect = ({ slug }: TimeSelectProps) => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
   const year = searchParams.get("year");
 
   const handleMonthChange = (value: string) => {
-    push(`/?month=${value}&year=${year}`);
+    push(`/${slug}?month=${value}&year=${year}`);
   };
 
   return (

@@ -2,7 +2,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Navbar from "../_components/navbar";
 import SummaryCards from "./_components/summary-cards";
-import TimeSelect from "./_components/time-select";
+import TimeSelect from "../_components/time-select";
 import { isMatch } from "date-fns";
 import { TransactionsPieChart } from "./_components/transactions-pie-chart";
 import { getDashboard } from "../_data/get-dashboard";
@@ -10,7 +10,7 @@ import ExpensesPerCategory from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import AiReportButton from "./_components/ai-report-button";
-import YearSelect from "./_components/year-select";
+import YearSelect from "../_components/year-select";
 
 interface HomeProps {
   searchParams: {
@@ -28,16 +28,12 @@ const Home = async ({ searchParams: { month, year } }: HomeProps) => {
 
   const monthIsValid = !month || !isMatch(month, "MM");
   const yearIsValid = !year || !isMatch(year, "yyyy");
-  if (monthIsValid || yearIsValid) {
-    redirect(
-      `?month=${new Date().getMonth() + 1}&year=${new Date().getFullYear()}`,
-    );
-  }
+  if (monthIsValid)
+    redirect(`?month=${new Date().getMonth() + 1}&year=${year}`);
+  if (yearIsValid) redirect(`?month=${month}&year=${new Date().getFullYear()}`);
 
   const dashboard = await getDashboard(month, year);
-
   const userCanAddTransaction = await canUserAddTransaction();
-
   const user = await clerkClient().users.getUser(userId);
 
   return (
