@@ -41,7 +41,7 @@ const Navbar = () => {
               : "text-primary-foreground"
           }
         >
-          Transactions
+          Transações
         </Link>
         <Link
           href="/recurrences"
