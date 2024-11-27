@@ -32,9 +32,18 @@ const TimeSelect = ({ slug }: TimeSelectProps) => {
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
   const year = searchParams.get("year");
+  const type = searchParams.get("type");
 
   const handleMonthChange = (value: string) => {
-    push(`/${slug}?month=${value}&year=${year}`);
+    if (!slug) {
+      push(`/?month=${value}&year=${year}`);
+      return;
+    }
+    if (!type) {
+      push(`/${slug}?month=${value}&year=${year}`);
+      return;
+    }
+    push(`/${slug}?month=${value}&year=${year}&type=${type}`);
   };
 
   return (

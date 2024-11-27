@@ -22,9 +22,18 @@ const YearSelect = ({ slug }: YearSelectProps) => {
   const searchParams = useSearchParams();
   const year = searchParams.get("year");
   const month = searchParams.get("month");
+  const type = searchParams.get("type");
 
   const handleYearChange = (value: string) => {
-    push(`/${slug}?month=${month}&year=${value}`);
+    if (!slug) {
+      push(`/?month=${month}&year=${value}`);
+      return;
+    }
+    if (!type) {
+      push(`/${slug}?month=${month}&year=${value}`);
+      return;
+    }
+    push(`/${slug}?month=${month}&year=${value}&type=${type}`);
   };
 
   return (

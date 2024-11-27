@@ -46,8 +46,8 @@ export const getTransactions = async (
       lt: new Date(`${year}-12-31`),
     };
   }
-
-  if (type) {
+  console.log("type", type);
+  if (type && type !== "null" && type !== "ALL") {
     where["type"] = type as "EXPENSE" | "INCOME" | "INVESTMENT";
   }
 
