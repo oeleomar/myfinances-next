@@ -64,8 +64,12 @@ const formSchema = z.object({
   }),
   paymentMethod: z.nativeEnum(PaymentMethod, {
     required_error: "Método de pagamento é obrigatório",
+    message: "Método de pagamento é obrigatório",
   }),
-  date: z.date({ required_error: "Data é obrigatória" }),
+  date: z.coerce.date({
+    required_error: "Data inválida",
+    message: "Data é obrigatória",
+  }),
   paid: z.boolean(),
   isRecurring: z.boolean().optional(),
   recurrence: z.number().optional(),
@@ -253,7 +257,7 @@ const UpsertTransactionDialog = ({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Data</FormLabel>
+                  <FormLabel>Data do pagamento</FormLabel>
                   <DatePicker value={field.value} onChange={field.onChange} />
                   <FormMessage />
                 </FormItem>

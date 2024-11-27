@@ -32,6 +32,7 @@ export const upsertTransaction = async (params: UpsertTransactionParams) => {
     where: { id: params?.id ?? "" },
   });
 
+  revalidatePath("/recurrences");
   revalidatePath("/transactions");
   revalidatePath("/");
 };
