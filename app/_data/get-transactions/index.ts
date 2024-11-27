@@ -1,7 +1,6 @@
 import { db } from "@/app/_lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { isMatch } from "date-fns";
-import { revalidatePath } from "next/cache";
 
 type WhereProps = {
   userId: string;
@@ -58,6 +57,5 @@ export const getTransactions = async (
     orderBy: { date: "desc" },
   });
 
-  revalidatePath("/transactions");
   return transactions;
 };
