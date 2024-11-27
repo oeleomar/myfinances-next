@@ -27,9 +27,10 @@ const TimeSelect = () => {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const month = searchParams.get("month");
+  const year = searchParams.get("year");
 
   const handleMonthChange = (value: string) => {
-    push(`/?month=${value}`);
+    push(`/?month=${value}&year=${year}`);
   };
 
   return (

@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { TransactionType } from "@prisma/client";
 import { TotalExpensePerCategory, TransactionPercentagePerType } from "./types";
 
-export const getDashboard = async (month: string) => {
+export const getDashboard = async (month: string, year: string) => {
   const { userId } = await auth();
   if (!userId) throw new Error("User not found");
 
@@ -11,8 +11,8 @@ export const getDashboard = async (month: string) => {
     userId,
     isRecurring: false,
     date: {
-      gte: new Date(`2024-${month}-01`),
-      lt: new Date(`2024-${month}-31`),
+      gte: new Date(`${year}-${month}-01`),
+      lt: new Date(`${year}-${month}-31`),
     },
   };
 
