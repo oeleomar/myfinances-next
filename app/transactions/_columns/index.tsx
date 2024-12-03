@@ -9,6 +9,8 @@ import {
 } from "@/app/_constants/transaction";
 import EditTransactionButton from "../../_components/transactions/edit-transactionbutton";
 import DeleteTransactioButton from "../../_components/transactions/delete-transactionbutton";
+import { Button } from "@/app/_components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const TransactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -55,9 +57,20 @@ export const TransactionColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "paid",
-    header: "Pago",
-    cell: ({ row: { original: transaction } }) =>
-      transaction.paid ? <p>Sim</p> : <p>Não</p>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Pago
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row: { original: transaction } }) => (
+      <p className="px-4">{transaction.paid ? "Sim" : "Não"}</p>
+    ),
   },
   {
     accessorKey: "actions",
