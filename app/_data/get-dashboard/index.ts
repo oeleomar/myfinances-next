@@ -145,7 +145,7 @@ export const getDashboard = async (month: string, year: string) => {
     )?._sum?.amount,
   );
 
-  const totalPaid = incomesPaid + expensesPaid + investimentsPaid;
+  const totalPaid = incomesPaid - expensesPaid - investimentsPaid;
 
   return {
     balance,

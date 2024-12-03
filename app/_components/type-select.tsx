@@ -48,7 +48,7 @@ const TypeSelect = ({ slug }: TypeSelectProps) => {
   return (
     <Select
       onValueChange={(value) => handleMonthChange(value)}
-      defaultValue={undefined}
+      defaultValue={searchParams.get("type") || "ALL"}
     >
       <SelectTrigger className="w-[150px] rounded-full">
         <SelectValue placeholder="Tipo" />
