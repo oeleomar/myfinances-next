@@ -1,6 +1,7 @@
 import { db } from "@/app/_lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { isMatch } from "date-fns";
+import { revalidatePath } from "next/cache";
 
 type WhereProps = {
   userId: string;
@@ -45,17 +46,16 @@ export const getTransactions = async (
       lt: new Date(`${year}-12-31`),
     };
   }
-  console.log("type", type);
+
   if (type && type !== "null" && type !== "ALL") {
     where["type"] = type as "EXPENSE" | "INCOME" | "INVESTMENT";
   }
-
-  console.log("where", where);
 
   const transactions = await db.transaction.findMany({
     where,
     orderBy: { date: "desc" },
   });
-
+  revalidatePath("/transactions");
+  revalidatePath("/");
   return transactions;
 };

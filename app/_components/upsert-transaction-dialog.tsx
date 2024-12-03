@@ -41,7 +41,7 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { upsertTransaction } from "../_actions/upsert-transaction";
 import { Checkbox } from "./ui/checkbox";
 import { toast } from "sonner";
@@ -83,18 +83,12 @@ const UpsertTransactionDialog = ({
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues ?? {
-      name: "",
-      amount: 1,
-      type: TransactionType.EXPENSE,
-      category: TransactionCategory.OTHER,
-      paymentMethod: PaymentMethod.PIX,
-      date: new Date(),
-      paid: false,
-      isRecurring: false,
-      recurrence: 0,
-    },
+    defaultValues: defaultValues,
   });
+
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues, form, isOpen]);
 
   const onSubmit = async (data: FormSchema) => {
     setOnSubmitState(true);
