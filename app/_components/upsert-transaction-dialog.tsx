@@ -70,7 +70,7 @@ const formSchema = z.object({
     required_error: "Data inválida",
     message: "Data é obrigatória",
   }),
-  paid: z.boolean(),
+  paid: z.boolean().optional(),
   isRecurring: z.boolean().optional(),
   recurrence: z.number().optional(),
 });

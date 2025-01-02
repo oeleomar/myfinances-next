@@ -32,7 +32,7 @@ export const GET = async (request: Request) => {
 
       const { date, ...transactionData } = transaction;
       const day = date.getDate();
-      const year = date.getFullYear();
+      const year = new Date().getFullYear();
       const month = new Date().getMonth() + 1; // Use current month to ensure correct scheduling
 
       await db.transaction.create({
