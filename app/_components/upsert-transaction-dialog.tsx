@@ -66,7 +66,7 @@ const formSchema = z.object({
     required_error: "Método de pagamento é obrigatório",
   }),
   date: z.date({ required_error: "Data é obrigatória" }),
-  paid: z.boolean(),
+  paid: z.boolean().optional(),
   isRecurring: z.boolean().optional(),
   recurrence: z.number().optional(),
 });
